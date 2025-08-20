@@ -3,6 +3,7 @@
 ---
 
 **Example 1 – formatResult → templateResult**
+
 Prev (v3 style):
 
 ```javascript
@@ -22,6 +23,7 @@ templateResult: function(item) {
 ---
 
 **Example 2 – Setting a value programmatically**
+
 Prev (v3 style):
 
 ```javascript
@@ -37,6 +39,7 @@ j("#gridTaxApplicableNameId").val(someValue).trigger("change");
 ---
 
 **Example 3 – Appending a new option dynamically**
+
 Prev (v3 style):
 
 ```javascript
@@ -52,6 +55,7 @@ j("#accountHeadNameId").empty().append(new Option("-- Select --", "-1", true, tr
 ---
 
 **Example 4 – templateSelection**
+
 Prev (v3 style):
 
 ```javascript
@@ -67,6 +71,7 @@ templateSelection: function(item) { return item.text; }
 ---
 
 **Example 5 – focusing the search box**
+
 Prev (v3 style):
 
 ```javascript
@@ -83,6 +88,7 @@ j('.select2-container--open .select2-search__field').focus(); // focus search bo
 ---
 
 **Example 6 – select3 open (dropdown open)**
+
 Prev (v3 style):
 
 ```javascript
@@ -98,6 +104,7 @@ j('#itemNameId').select2('open');
 ---
 
 **Example 7 – Getting non-editable field value**
+
 Prev (v3 style):
 
 ```javascript
@@ -113,6 +120,7 @@ j('#gridTaxApplicableNameId_nonEdit').html(j("#gridTaxApplicableNameId").select2
 ---
 
 **Example 8 – Using `text` instead of `name`**
+
 Prev (v3 style):
 
 ```javascript
@@ -128,6 +136,7 @@ j("#vendorNameId").val(someValue).trigger("change");
 ---
 
 **Example 9 – AJAX results → processResults**
+
 Prev (v3 style):
 
 ```javascript
@@ -152,6 +161,7 @@ processResults: function (data, params) {
 ---
 
 **Example 10 – quietMillis → delay**
+
 Prev (v3 style):
 
 ```javascript
@@ -167,6 +177,7 @@ delay: 50,
 ---
 
 **Example 11 – AJAX `data` function**
+
 Prev (v3 style):
 
 ```javascript
@@ -186,6 +197,7 @@ data: function (params) {
 ---
 
 **Example 12 – Removal of `initSelection`**
+
 Prev (v3 style):
 
 ```javascript
@@ -201,6 +213,7 @@ Later (v4 style):
 ---
 
 **Example 13 – HTML hidden → select element**
+
 Prev (v3 style):
 
 ```html
@@ -216,6 +229,7 @@ Later (v4 style):
 ---
 
 **Example 14 – Populating HSN/SAC dynamically**
+
 Prev (v3 style):
 
 ```javascript
@@ -231,6 +245,7 @@ j('#hsnSacCodeId').empty().append(new Option(processArr[0], processArr[1], true,
 ---
 
 **Example 15 – Clearing a Select2 field programmatically**
+
 Prev (v3 style):
 
 ```javascript
