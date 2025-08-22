@@ -119,18 +119,18 @@ j('#gridTaxApplicableNameId_nonEdit').html(j("#gridTaxApplicableNameId").select2
 
 ---
 
-**Example 8 – Using `text` instead of `name`**
+**Example 8 – Getting value, Attribute change:** 'name' **to** 'text'
 
 Prev (v3 style):
 
 ```javascript
-j("#vendorNameId").select2("val", someValue).text();
+vendorSelection = j("#vendorNameId").select2('data').name;
 ```
 
 Later (v4 style):
 
 ```javascript
-j("#vendorNameId").val(someValue).trigger("change");
+vendorSelection = j("#vendorNameId").select2('data')[0]?.text || "";
 ```
 
 ---
@@ -228,23 +228,7 @@ Later (v4 style):
 
 ---
 
-**Example 14 – Populating HSN/SAC dynamically**
-
-Prev (v3 style):
-
-```javascript
-j('#hsnSacCodeId').select2('data', { id: processArr[1], text: processArr[0] });
-```
-
-Later (v4 style):
-
-```javascript
-j('#hsnSacCodeId').empty().append(new Option(processArr[0], processArr[1], true, true)).trigger('change');
-```
-
----
-
-**Example 15 – Clearing a Select2 field programmatically**
+**Example 14 – Clearing a Select2 field programmatically**
 
 Prev (v3 style):
 
@@ -260,4 +244,76 @@ j("#vendorNameId").val(null).trigger("change");
 
 ---
 
+**Example Snippet code**
 
+Prev (v3 style):
+
+```javascript
+    j('#vendorNameId').select2({
+    	placeholder: "Select a Vendor",
+    	minimumInputLength: 2,
+        initSelection: function(el, fn) {
+        },
+	    ajax: {
+	        url: "/TnEV1_0AWeb/master/selectTwo.tne?command=getSelect2ListFromAjaxForVendor&isWithOrWithoutPO="+document.forms[0]["itemType"].value,
+	        dataType: 'json',
+	        type: "POST",
+	        quietMillis: 50,
+	        data: function (term) {
+	   	        return {
+	   	          searchTerm: term, // search term
+	   	          rateCardType: document.forms[0]["rateCard"][1].value,
+	   	          ouId: document.forms[0]["empOuId"].value,
+	   	          invDate: document.forms[0]["invoiceDate"].value,
+	   	          pageSize: vendorPageSize,
+	   	          page: vendorPageNo
+	   	        };
+	        },
+	        results: function (data,page) {
+	        	vendorPageNo = page;
+	            return {
+	                results: data.result
+	                , more: data.more
+	            };
+	        }
+	    }
+    });
+```
+
+Later (v4 style):
+
+```javascript
+    j('#vendorNameId').select2({
+		placeholder: "Select a Vendor",
+		minimumInputLength: 2,									// removed initSelection
+		ajax: {
+			url: "/TnEV1_0AWeb/master/selectTwo.tne?command=getSelect2ListFromAjaxForVendor&isWithOrWithoutPO="
+				+ document.forms[0]["itemType"].value,
+			dataType: 'json',
+			type: "POST",
+			delay: 50,   										// changed 'quietMillis' : to 'delay'
+			data: function(params) {
+				return {
+					searchTerm: params.term || '',   			// params.term = text entered in searchbox
+					rateCardType: document.forms[0]["rateCard"][1].value,
+					ouId: document.forms[0]["empOuId"].value,
+					invDate: document.forms[0]["invoiceDate"].value,
+					pageSize: vendorPageSize,
+					page: vendorPageNo || 1
+				};
+			},
+			processResults: function(data, params) {			// changed 'results' : to 'processResults'
+				// console.log("Backend response:", data);
+				vendorPageNo = params.page || 1;				// page present in params.page
+				return {
+					results: data.result,       				// matches {id, text} format
+					pagination: {
+						more: data.more         				// more moved inside pagination object
+					}
+				};
+			}
+		}
+	});
+```
+
+---
